@@ -37,4 +37,10 @@ func (rt *Router) Handle(path string, handler http.Handler) {
 func (rt *Router) HandleFunc(path string, handler http.HandlerFunc) {
 }
 
+func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+}
+
+
+
 
