@@ -10,7 +10,12 @@ type Router struct {
 }
 
 func NewRouter() *Router {
-  return &Router{}
+  return &Router{
+    label: "",
+    prefix: "", 
+    method: []string{},
+    child: []*Router{},
+  }
 }
 
 func (rt *Router) Methods(methods ...string) *Router {
