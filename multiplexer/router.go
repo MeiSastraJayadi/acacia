@@ -10,7 +10,12 @@ type Router struct {
 }
 
 func NewRouter() *Router {
-  return &Router{}
+  return &Router{
+    label: "",
+    prefix: "", 
+    method: []string{},
+    child: []*Router{},
+  }
 }
 
 func (rt *Router) Methods(methods ...string) *Router {
@@ -31,5 +36,11 @@ func (rt *Router) Handle(path string, handler http.Handler) {
 
 func (rt *Router) HandleFunc(path string, handler http.HandlerFunc) {
 }
+
+func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+}
+
+
 
 
