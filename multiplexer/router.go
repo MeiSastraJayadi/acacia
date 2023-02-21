@@ -1,50 +1,48 @@
 package multiplexer
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type Router struct {
+  prefix string
+  tree *tree
+}
+
+
+type saveInformation struct {
   label string
-  methods map[string]action
-  child map[string]*Router
+  methods []string
+  handler []*handlers
 }
 
-type action struct {
-  handler *http.Handler
-}
+var saver = &saveInformation{}
 
-func NewRouter(prefix string) *Router {
+func NewRouter(basepath string) *Router {
+  tree := newTree(basepath)
   return &Router{
-    label : prefix, 
-    methods: make(map[string]action),
-    child: make(map[string]*Router),
+    prefix: "",
+    tree: tree,
   }
+}
+
+func (rt *Router) SetPrefix(prefix string) {
+  rt.prefix = prefix
 }
 
 func (rt *Router) Methods(methods ...string) *Router {
-  newRouter := NewRouter("")
-  rt.child = append(rt.child, newRouter)
+  for _, method := range methods {
+    saver.methods = append(saver.methods, method)
+  }
   return rt
 }
 
-func (rt *Router) SubRouter() *Router {
-  subRouter := rt.child[len(rt.child)-1]
-  if len(rt.child) < 2 {
-    rt.child = []*Router{}
-  } else {
-    rt.child = rt.child[1:]
-  }
-  return subRouter
-}
-
-func (rt *Router) Handle(path string, handler http.Handler) {
-}
-
-func (rt *Router) HandleFunc(path string, handler http.HandlerFunc) {
+func (rt *Router) SubRouter(router *Router) {
+  // label := router.tree.root.label
 }
 
 func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
-
 
 
 
