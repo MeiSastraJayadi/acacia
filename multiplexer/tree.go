@@ -29,8 +29,9 @@ func newNode(path string) *node {
 }
 
 func newTree(basepath string) *tree {
+  path := explodePath(basepath)[0]
   nd := &node{
-    label: basepath,
+    label: path,
     handler: make(map[string]*handlers),
     child: make(map[string]*node),
   } 
@@ -51,6 +52,10 @@ func explodePath(path string)[]string {
 
 func (tr *tree) insert(label string, handler handlers, method string) {
   path := explodePath(label)
+  if len(path) == 1 && path[0] == tr.root.label {
+    tr.root.handler[method] = &handler
+    return
+  }
   currentNode := tr.root
   for i, value := range path {
     childNode, ok := currentNode.child[value] 
@@ -87,6 +92,7 @@ func (tr *tree) search(path string, method string) *handlers {
   }
   return nil
 }
+
 
 
 
