@@ -1,6 +1,7 @@
 package multiplexer
 
 import (
+	"errors"
 	"net/http"
 	"strings"
 )
@@ -72,7 +73,7 @@ func (tr *tree) insert(label string, handler handlers, method string) {
   }
 }
 
-func (tr *tree) search(path string, method string) *handlers {
+func (tr *tree) search(path string, method string) (*handlers, error) {
   listPath := explodePath(path) 
   currentNode := tr.root
   for i, value := range listPath {
@@ -84,13 +85,15 @@ func (tr *tree) search(path string, method string) *handlers {
       if value == currentNode.label {
         _, ok = currentNode.handler[method] 
         if !ok {
-          return nil
+          methodError := errors.New("Method not allowed")
+          return nil, methodError
         }
-        return currentNode.handler[method]
+        return currentNode.handler[method], nil
       }
     }
   }
-  return nil
+  pathError := errors.New("URL path is not found")
+  return nil, pathError
 }
 
 
