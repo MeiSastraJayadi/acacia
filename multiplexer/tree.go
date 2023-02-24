@@ -3,10 +3,12 @@ package multiplexer
 import (
 	"errors"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
 type node struct {
+  rgx *regexp.Regexp
   label string
   handler map[string]*handlers
   child map[string]*node
@@ -26,6 +28,7 @@ func newNode(path string) *node {
     label : path, 
     handler: make(map[string]*handlers),
     child: make(map[string]*node),
+    rgx: nil,
   }
 }
 

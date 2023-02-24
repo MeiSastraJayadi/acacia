@@ -64,7 +64,7 @@ func TestSearch(t *testing.T) {
   tr := newTree("/")
   tr.root.handler[http.MethodGet] = &hdl 
   tr.insert("/product/get-all", hdl, http.MethodGet)
-  result := tr.search("/product/get-all", http.MethodGet)
+  result, _ := tr.search("/product/get-all", http.MethodGet)
   assert.Equal(t, &hdl, result)
 }
 
