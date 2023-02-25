@@ -1,46 +1,59 @@
 package multiplexer
 
-import "net/http"
+import (
+	"errors"
+)
 
 type Router struct {
-  label string
   prefix string
-  method []string
-  child []*Router
+  saver saveInformation
+  tree *tree
 }
 
-func NewRouter() *Router {
+
+type saveInformation struct {
+  methods []string
+}
+
+
+func NewRouter(basepath string) *Router {
+  tree := newTree(basepath)
   return &Router{
-    label: "",
-    prefix: "", 
-    method: []string{},
-    child: []*Router{},
+    prefix: "",
+    tree: tree,
+    saver: saveInformation{},
+  }
+}
+
+func (rt *Router) SetPrefix(prefix string) {
+  if prefix == "" || prefix == "/" {
+    return
+  }
+  rt.prefix = prefix
+  if rt.tree.root.label == "" {
+    rt.tree.root.label = prefix
+  } else {
+    currentTree := rt.tree.root
+    newNode := newNode(prefix) 
+    newNode.child[currentTree.label] = currentTree
+    rt.tree.root = newNode
   }
 }
 
 func (rt *Router) Methods(methods ...string) *Router {
-  newRoute := NewRouter()
-  for _, m := range methods {
-    newRoute.method = append(newRoute.method, m)
+  for _, method := range methods {
+    rt.saver.methods = append(rt.saver.methods, method)
   }
-  rt.child = append(rt.child, newRoute)
-  return rt 
+  return rt
 }
 
-func (rt *Router) SubRouter() *Router {
-  return rt.child[len(rt.child)-1]
+func (rt *Router) SubRouter(router *Router) error {
+  if rt.tree.root.label == router.tree.root.label {
+    return errors.New("Router and SubRouter has same root path, make sure router and subrouter has different root path")
+  }
+  rt.tree.root.child[router.tree.root.label] = router.tree.root
+  return nil
 }
-
-func (rt *Router) Handle(path string, handler http.Handler) {
-}
-
-func (rt *Router) HandleFunc(path string, handler http.HandlerFunc) {
-}
-
-func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-
-}
-
 
 
 
