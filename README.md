@@ -6,7 +6,7 @@
 
 <div align="center">
 
-* Acacia is lightweight package that will help you to do routing 
+Acacia is lightweight package that will help you to do routing 
 
 </div>
 
