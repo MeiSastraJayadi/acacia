@@ -9,6 +9,8 @@ import (
 func TestRegexInt(t *testing.T) {
   findstr := regInt.FindString("/product/0.897")
   assert.Equal(t, "0", findstr)
+  matchInt := regInt.MatchString("0.545")
+  assert.Equal(t, true, matchInt)
 }
 
 func TestRegexFloat(t *testing.T) {
