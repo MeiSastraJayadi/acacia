@@ -4,6 +4,9 @@ import (
 	"errors"
 )
 
+// Router struct is router 
+// that will help to routing every incoming request.
+// This router used tree data structure to do request routin
 type Router struct {
   prefix string
   saver saveInformation
@@ -15,7 +18,7 @@ type saveInformation struct {
   methods []string
 }
 
-
+// NewRouter will return *Router. 
 func NewRouter(basepath string) *Router {
   tree := newTree(basepath)
   return &Router{
@@ -25,6 +28,11 @@ func NewRouter(basepath string) *Router {
   }
 }
 
+// SetPrefix will set prefix for Router object.
+// Every path will be start with prefix to access it
+// example : 
+// the original path --> /id
+// with prefix = "product" => product/id
 func (rt *Router) SetPrefix(prefix string) {
   if prefix == "" || prefix == "/" {
     return
@@ -40,6 +48,8 @@ func (rt *Router) SetPrefix(prefix string) {
   }
 }
 
+// Set every http method that will assign to the path 
+// that will be added into Router object
 func (rt *Router) Methods(methods ...string) *Router {
   for _, method := range methods {
     rt.saver.methods = append(rt.saver.methods, method)
@@ -47,6 +57,8 @@ func (rt *Router) Methods(methods ...string) *Router {
   return rt
 }
 
+
+// Function SubRouter will add sub router to main router
 func (rt *Router) SubRouter(router *Router) error {
   if rt.tree.root.label == router.tree.root.label {
     return errors.New("Router and SubRouter has same root path, make sure router and subrouter has different root path")
