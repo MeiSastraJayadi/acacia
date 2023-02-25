@@ -10,6 +10,13 @@ var regFloat, _ = regexp.Compile("^[-+]?[0-9]*(\\.[0-9]+)$")
 var regSlug, _ = regexp.Compile("^[a-z0-9]+(?:[_-][a-z0-9]+)*$")
 var regString, _ = regexp.Compile("^(.*)")
 
+var regMap = map[int]*regexp.Regexp {
+  1 : regFloat,
+  2 : regInt, 
+  3 : regSlug, 
+  4 : regString,
+}
+
 func explodePath(path string)[]string {
   listString := strings.Split(path, "/")
   if listString[0] == "" {
@@ -41,19 +48,19 @@ func getKey(params string) string {
   return keyValue[0]
 }
 
-func selectRegex(params string) *regexp.Regexp {
+func selectRegex(params string) int {
   cleanParamas := params[1:len(params)-1]
   keyValue := strings.Split(cleanParamas, ":")
 
   switch keyValue[1] {
     case "float" : 
-      return regFloat
+      return 1 
     case "int" : 
-      return regInt
+      return 2 
     case "slug" : 
-      return regSlug
+      return 3 
     default :
-      return regString
+      return 4 
   }
 }
 
