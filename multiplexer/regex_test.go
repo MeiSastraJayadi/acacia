@@ -28,3 +28,10 @@ func TestRegexSlug(t *testing.T) {
   matchSlug = regSlug.MatchString("jayadi")
   assert.Equal(t, true, matchSlug)
 }
+
+func TestAcceptnonSpace(t *testing.T) {
+  match1 := acceptStringWithoutSpace("imademeiSastraJayadi")
+  assert.Equal(t, true, match1)
+  match2 := acceptStringWithoutSpace("imademei SastraJayadi")
+  assert.Equal(t, false, match2)
+}

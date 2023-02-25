@@ -4,11 +4,10 @@ import (
 	"errors"
 	"net/http"
 	"regexp"
-	"strings"
 )
 
 type node struct {
-  rgx *regexp.Regexp
+  rgx map[*regexp.Regexp]string 
   label string
   handler map[string]*handlers
   child map[string]*node
@@ -28,7 +27,7 @@ func newNode(path string) *node {
     label : path, 
     handler: make(map[string]*handlers),
     child: make(map[string]*node),
-    rgx: nil,
+    rgx: make(map[*regexp.Regexp]string),
   }
 }
 
@@ -45,15 +44,6 @@ func newTree(basepath string) *tree {
   }
 }
 
-func explodePath(path string)[]string {
-  listString := strings.Split(path, "/")
-  if listString[0] == "" {
-    return listString[1:]
-  }
-  return listString
-}
-
-
 func (tr *tree) insert(label string, handler handlers, method string) {
   path := explodePath(label)
   if len(path) == 1 && path[0] == tr.root.label {
@@ -66,9 +56,21 @@ func (tr *tree) insert(label string, handler handlers, method string) {
     if ok {
       currentNode = childNode
     } else {
-      nd := newNode(value)
-      currentNode.child[value] = nd
-      currentNode = nd
+      checkIsParams := isWithParams(value)    
+      if !checkIsParams {
+        // If path is not a params
+        nd := newNode(value)
+        currentNode.child[value] = nd
+        currentNode = nd
+      } else {
+        // if path is a params with key and type
+        re := selectRegex(value)
+        lbl := getKey(value)
+        nd := newNode(lbl)
+        currentNode.rgx[re] = lbl
+        currentNode.child[value] = nd
+        currentNode = nd
+      }
     }
     if i == len(path)-1 {
       currentNode.handler[method] = &handler
@@ -98,6 +100,7 @@ func (tr *tree) search(path string, method string) (*handlers, error) {
   pathError := errors.New("URL path is not found")
   return nil, pathError
 }
+
 
 
 

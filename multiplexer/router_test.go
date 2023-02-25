@@ -52,6 +52,13 @@ func TestSubRouter2(t *testing.T) {
   assert.Equal(t, &hdl, hd)
 }
 
+func TestReturnRegex(t *testing.T) {
+  result := selectRegex("{name:slug}")
+  assert.Equal(t, regSlug, result)
+  result = selectRegex("{name:string}")
+  assert.Equal(t, regString, result)
+}
+
 
 
 
