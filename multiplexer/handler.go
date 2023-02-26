@@ -35,7 +35,7 @@ func (rt *Router) HandleFunc(path string, handlerFunc http.HandlerFunc) {
 }
 
 func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) error {
-  url := r.URL.RawPath 
+  url := r.URL.Path
   method := r.Method
   handler, err := rt.tree.search(url,method)
   if err != nil {
