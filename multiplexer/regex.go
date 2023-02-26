@@ -63,14 +63,3 @@ func selectRegex(params string) int {
       return 4 
   }
 }
-
-// func splitPath(path string) []string {
-//   collection1 := strings.Split(path, "{")
-//   collection2 := strings.Split(path, "}")
-// }
-
-// func regexInsert(path string) (string, *regexp.Regexp, error) {
-//   cleanPath := path[1:]
-//   result := strings.Split(cleanPath, ":")
-//   rg, err := regexp.Compile(result[1])
-// }
