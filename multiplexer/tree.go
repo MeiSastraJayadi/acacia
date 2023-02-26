@@ -6,6 +6,15 @@ import (
 	"regexp"
 )
 
+// The node is smallest unit or object in tree
+// node held some data
+// the data that held by a single node is : 
+// -- re : a regular expression
+// -- rgx : a map that has key of integers and value of string
+//          the key is represnted a number of regular expression type
+//          and the value is represented the label of path
+// -- handler : a map with key of label (string data type) and with value of handlers object
+// -- child : is list of node children. This data is a map with key of string and every key point to value with *node data type
 type node struct {
   re *regexp.Regexp
   rgx map[int]string 
@@ -14,6 +23,8 @@ type node struct {
   child map[string]*node
 }
 
+// a handlers is just handler that use 
+// to handling some path
 type handlers struct {
   handler http.Handler
 }
@@ -23,6 +34,9 @@ type tree struct {
 }
 
 
+// newNode will create new node that can be used to build a tree.
+// newNode need take a paremeter with string datatype. 
+// this parameter is represented a path of string that will be a basepath of node
 func newNode(path string) *node {
   return &node{
     label : path, 
@@ -33,6 +47,10 @@ func newNode(path string) *node {
   }
 }
 
+
+// newTree will create a tree object. This tree object can be used 
+// in Router struct. The tree is critical part that will help in routing 
+// the path
 func newTree(basepath string) *tree {
   path := explodePath(basepath)[0]
   nd := &node{
@@ -46,6 +64,9 @@ func newTree(basepath string) *tree {
   }
 }
 
+// This function is used to inserting the path, handler, and method in to the tree
+// when use function Router.Handler() this function will used to inserting the 
+// the node into the router tree
 func (tr *tree) insert(label string, handler handlers, method string) {
   path := explodePath(label)
   if len(path) == 1 && path[0] == tr.root.label {
@@ -81,6 +102,8 @@ func (tr *tree) insert(label string, handler handlers, method string) {
   }
 }
 
+
+// Search is used to search path in the tree
 func (tr *tree) search(path string, method string) (*handlers, error) {
   listPath := explodePath(path) 
   currentNode := tr.root
