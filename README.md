@@ -1,6 +1,6 @@
 <div align="center">
 
-![alt text](https://github.com/MeiSastraJayadi/acacia/blob/readme/acacia-wordmark.png "Acacia's Logo")
+![alt text](https://github.com/MeiSastraJayadi/acacia/blob/master/acacia-wordmark.png "Acacia's Logo")
 
 <div id="badges">
   <img src="https://img.shields.io/static/v1?logo=Go&label=Golang&message=Golang%20Package&color=blue" alt="golang"/>
