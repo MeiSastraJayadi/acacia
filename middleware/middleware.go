@@ -41,7 +41,10 @@ func (um *UseMiddleware) AddMiddleware(middleware Middleware) {
 }
 
 func (mw *UseMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-  hdl := mw.function(mw.router)
-  hdl.ServeHTTP(w, r)
+  if mw.function != nil && mw.router != nil {
+    hdl := mw.function(mw.router)
+    hdl.ServeHTTP(w, r)
+  }
+  return
 }
 
