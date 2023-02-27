@@ -2,18 +2,16 @@ package middleware
 
 import (
 	"net/http"
-
-	"github.com/MeiSastraJayadi/acacia/multiplexer"
 )
 
 
 // UseMiddleware struct can create an object to apply UseMiddleware
 // in specific *multiplexer.Router object. This struct has two field. 
 // The first field is : ---> function, which is a Middleware Function
-// The second one is : --> router, which is a *multiplexer.Router where the middleware will be applied
+// The second one is : --> handler, which is a http.Handler where the middleware will be applied
 type UseMiddleware struct {
   function Middleware
-  router *multiplexer.Router
+  handler http.Handler 
 } 
 
 // Middleware is a function that need one parameter with type of http.Handler 
@@ -24,14 +22,14 @@ type Middleware func(next http.Handler) http.Handler
 func NewUseMiddleware() *UseMiddleware {
   return &UseMiddleware{
     function: nil,
-    router: nil,
+    handler: nil,
   }
 }
 
-// AddRouter function will add new *multiplexer.Router into the 
+// AddRouter function will add new http.Handler into the 
 // UseMiddleware object
-func (um *UseMiddleware) AddRouter(router *multiplexer.Router) {
-  um.router = router
+func (um *UseMiddleware) AddHandler (handler http.Handler) {
+  um.handler = handler 
 }
 
 // AddMiddleware function will add new Middleware function into the 
@@ -41,8 +39,8 @@ func (um *UseMiddleware) AddMiddleware(middleware Middleware) {
 }
 
 func (mw *UseMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-  if mw.function != nil && mw.router != nil {
-    hdl := mw.function(mw.router)
+  if mw.function != nil && mw.handler != nil {
+    hdl := mw.function(mw.handler)
     hdl.ServeHTTP(w, r)
   }
   return
