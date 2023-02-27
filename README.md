@@ -11,14 +11,14 @@
 
 # About 
 
-#### Acacia is lightweight package that will help you to do routing. Acacia route the path with tree data structure. This package also support parameters in the path so it will help developer to build http routing with some parameters. in the path
+#### Acacia is lightweight package that will help you to route http server. Acacia route the path based on tree data structure. This package also support parameters in the path, so it will help you to build http routing with some parameters. in the path
 
 --- 
 
 # Install 
 
 ```console
-$ go get -u github.com/MeiSastraJayadi/acacia
+$ go get github.com/MeiSastraJayadi/acacia
 
 ```
 
@@ -30,13 +30,13 @@ $ go get -u github.com/MeiSastraJayadi/acacia
 router := multiplexer.NewRouter("/")
 ```
 ## Add Prefix to the Router
-##### Prefix will add some prefix into the router path. the parameter that will be accept in function SetPrefix is just a string type
+##### SetPrefix will add a prefix into the router path. the parameter that will be accept in function SetPrefix is just a string 
 ```golang
 router := multiplexer.NewRouter("/")
 router.SetPrefix("product")
 ```
 ## Add Some Methods 
-##### With Router.Methods() some methods will be added into the router. The methods can be added more than one method if the router can handle more than one methods
+##### With Router.Methods(), some methods will be added into the router. The methods can be added more than just one method if the router can handle more than one methods
 ```golang
 router := multiplexer.NewRouter("/")
 routerPost := router.Methods(http.MethodsPost)
@@ -47,7 +47,7 @@ router := multiplexer.NewRouter("/")
 routerPost := router.Methods(http.MethodsPost, http.MethodGet)
 ```
 ## Add Subrouter
-##### A router can add some Subrouter from another router. To do that, what you can do is
+##### A router can be added some subrouter from another router. To do that, what you can do is
 ```golang
 router := multiplexer.NewRouter("/")
 routerPost := router.Methods(http.MethodsPost, http.MethodGet)
