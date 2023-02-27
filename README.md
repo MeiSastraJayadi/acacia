@@ -37,7 +37,7 @@ router := multiplexer.NewRouter("/")
 
 ```golang
 router := multiplexer.NewRouter("/")
-router.SetPrefix("/product")
+router.SetPrefix("product")
 ```
 
 ### Add Some Methods 
@@ -53,6 +53,19 @@ routerPost := router.Methods(http.MethodsPost)
 ```golang
 router := multiplexer.NewRouter("/")
 routerPost := router.Methods(http.MethodsPost, http.MethodGet)
+```
+
+### Add Subrouter
+
+##### A router can add some Subrouter from another router. To do that, what you can do is
+
+```golang
+router := multiplexer.NewRouter("/")
+routerPost := router.Methods(http.MethodsPost, http.MethodGet)
+
+subrouter := multiplexer.NewRouter("/") 
+subrouter.SetPrefix("product")
+router.SubRouter(subrouter)
 ```
 
 
