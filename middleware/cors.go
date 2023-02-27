@@ -58,13 +58,13 @@ func (cors *CORS) corsMiddleware() Middleware {
   return func(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
       for _, value := range cors.allowHeader {
-        r.Header.Add("Access-Control-Allow-Headers", value)
+        w.Header().Add("Access-Control-Allow-Headers", value)
       }
       for _, value := range cors.allowMethod {
-        r.Header.Add("Access-Control-Allow-Methods", value)
+        w.Header().Add("Access-Control-Allow-Methods", value)
       }
       for _, value := range cors.allowOrigin {
-        r.Header.Add("Access-Control-Allow-Origin", value)
+        w.Header().Add("Access-Control-Allow-Origin", value)
       }
       next.ServeHTTP(w, r)
     })
