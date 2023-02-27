@@ -4,11 +4,12 @@
 
 <div id="badges">
   <img src="https://img.shields.io/static/v1?logo=Go&label=Golang&message=Golang%20Package&color=blue" alt="golang"/>
+  <img src="https://img.shields.io/github/license/MeiSastraJayadi/acacia" alt="license"/>
 </div>
 
 </div>
 
-# What is Acacia
+# About 
 
 ---
 
