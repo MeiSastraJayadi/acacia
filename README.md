@@ -25,40 +25,29 @@ $ go get -u github.com/MeiSastraJayadi/acacia
 ----
 
 # Router
-
 ## Create New Router
-
 ```golang
 router := multiplexer.NewRouter("/")
 ```
 ## Add Prefix to the Router
-
 ##### Prefix will add some prefix into the router path. the parameter that will be accept in function SetPrefix is just a string type
-
 ```golang
 router := multiplexer.NewRouter("/")
 router.SetPrefix("product")
 ```
-
 ## Add Some Methods 
-
 ##### With Router.Methods() some methods will be added into the router. The methods can be added more than one method if the router can handle more than one methods
-
 ```golang
 router := multiplexer.NewRouter("/")
 routerPost := router.Methods(http.MethodsPost)
 ```
 ##### Or
-
 ```golang
 router := multiplexer.NewRouter("/")
 routerPost := router.Methods(http.MethodsPost, http.MethodGet)
 ```
-
 ## Add Subrouter
-
 ##### A router can add some Subrouter from another router. To do that, what you can do is
-
 ```golang
 router := multiplexer.NewRouter("/")
 routerPost := router.Methods(http.MethodsPost, http.MethodGet)
