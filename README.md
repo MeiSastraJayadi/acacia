@@ -15,7 +15,7 @@
 
 --- 
 
-# Download 
+# Install 
 
 ```console
 $ go get -u github.com/MeiSastraJayadi/acacia
