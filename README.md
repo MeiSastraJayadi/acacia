@@ -11,8 +11,6 @@
 
 # About 
 
----
-
 #### Acacia is lightweight package that will help you to do routing. Acacia route the path with tree data structure. This package also support parameters in the path so it will help developer to build http routing with some parameters. in the path
 
 --- 
@@ -33,7 +31,6 @@ $ go get -u github.com/MeiSastraJayadi/acacia
 ```golang
 router := multiplexer.NewRouter("/")
 ```
-
 ### Add Prefix to the Router
 
 ##### Prefix will add some prefix into the router path. the parameter that will be accept in function SetPrefix is just a string type
