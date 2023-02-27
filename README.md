@@ -43,4 +43,19 @@ router := multiplexer.NewRouter("/")
 router.SetPrefix("/product")
 ```
 
+### Add Some Methods 
+
+##### With Router.Methods() some methods will be added into the router. The methods can be added more than one method if the router can handle more than one methods
+
+```golang
+router := multiplexer.NewRouter("/")
+routerPost := router.Methods(http.MethodsPost)
+```
+##### Or
+
+```golang
+router := multiplexer.NewRouter("/")
+routerPost := router.Methods(http.MethodsPost, http.MethodGet)
+```
+
 
