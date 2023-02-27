@@ -13,15 +13,26 @@ type UseMiddleware struct {
 
 type Middleware func(next http.Handler) http.Handler
 
-func NewUseMiddleware(router *multiplexer.Router, middleware Middleware) *UseMiddleware {
+func NewUseMiddleware() *UseMiddleware {
   return &UseMiddleware{
-    function: middleware,
-    router: router,
+    function: nil,
+    router: nil,
   }
 }
 
+func (um *UseMiddleware) AddRouter(router *multiplexer.Router) {
+  um.router = router
+}
+
+func (um *UseMiddleware) AddMiddleware(middleware Middleware) {
+  um.function = middleware 
+}
+
 func (mw *UseMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-  hdl := mw.function(mw.router)
-  hdl.ServeHTTP(w, r)
+  if mw.function != nil && mw.router != nil {
+    hdl := mw.function(mw.router)
+    hdl.ServeHTTP(w, r)
+  }
+  return
 }
 
