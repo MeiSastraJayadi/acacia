@@ -1,11 +1,12 @@
 package multiplexer
 
 import (
+	"fmt"
 	"net/http"
 )
 
-// routerHandler is just a struct that use 
-// http.Handler interface. Actually this struct is use to 
+// routerHandler is just a struct that use
+// http.Handler interface. Actually this struct is use to
 // save an handlerfunction and add ServeHTTP functionality
 type routerHandler struct {
   handlerFunction http.HandlerFunc
@@ -59,14 +60,13 @@ func (rt *Router) HandleFunc(path string, handlerFunc http.HandlerFunc) {
   rt.Handle(path, rh)
 }
 
-func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) error {
+func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
   url := r.URL.Path
   method := r.Method
   handler, err := rt.tree.search(url,method)
   if err != nil {
-    return err
+    fmt.Fprintf(w, "404 Not Found Error")
   }
   handler.handler.ServeHTTP(w, r)
-  return nil
 }
 
