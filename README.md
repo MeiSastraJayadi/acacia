@@ -31,7 +31,15 @@ $ go get -u github.com/MeiSastraJayadi/acacia
 
 ```golang
 router := multiplexer.NewRouter("/")
+```
 
+### Add Prefix to the Router
+
+##### Prefix will add some prefix into the router path. the parameter that will be accept in function SetPrefix is just a string type
+
+```golang
+router := multiplexer.NewRouter("/")
+router.SetPrefix("/product")
 ```
 
 
