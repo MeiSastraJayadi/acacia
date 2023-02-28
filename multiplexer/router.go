@@ -33,9 +33,9 @@ func NewRouter(basepath string) *Router {
 // example : 
 // the original path --> /id
 // with prefix = "product" => product/id
-func (rt *Router) SetPrefix(prefix string) {
+func (rt *Router) SetPrefix(prefix string) *Router {
   if prefix == "" || prefix == "/" {
-    return
+    return nil
   }
   rt.prefix = prefix
   if rt.tree.root.label == "" {
@@ -46,6 +46,7 @@ func (rt *Router) SetPrefix(prefix string) {
     newNode.child[currentTree.label] = currentTree
     rt.tree.root = newNode
   }
+  return rt
 }
 
 // Set every http method that will assign to the path 
