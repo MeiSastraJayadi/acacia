@@ -40,6 +40,11 @@ func (rt *Router) Handle(path string, handler http.Handler) {
   for _, item := range rt.saver.methods {
     rt.tree.insert(path, hdl, item)
   }
+
+  if len(rt.saver.methods) < 1 {
+    rt.tree.insert(path, hdl, http.MethodGet)
+  }
+
   rt.saver.methods = []string{}
 }
 
