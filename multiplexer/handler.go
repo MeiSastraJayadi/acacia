@@ -1,7 +1,6 @@
 package multiplexer
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -70,7 +69,8 @@ func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
   method := r.Method
   handler, err := rt.tree.search(url,method)
   if err != nil {
-    fmt.Fprintf(w, "404 Not Found Error")
+    http.Error(w,"404 Not Found", http.StatusNotFound)
+    return
   }
   handler.handler.ServeHTTP(w, r)
 }
