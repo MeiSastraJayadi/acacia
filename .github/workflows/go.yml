@@ -23,7 +23,7 @@ jobs:
         
     - name: Install Dependencies
       run: |
-        go get ../../ 
+        go get ../../. 
         go get github.com/stretchr/testify
 
     - name: Build
