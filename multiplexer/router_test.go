@@ -19,6 +19,7 @@ func TestSubRouter(t *testing.T) {
   hdl := handlers{
     handler : hand,
   }
+
   router.tree.insert("/product/get-all", hdl, http.MethodGet)
   subrouter := NewRouter("/")
   assert.Equal(t, "", subrouter.tree.root.label)
@@ -54,9 +55,9 @@ func TestSubRouter2(t *testing.T) {
 
 func TestReturnRegex(t *testing.T) {
   result := selectRegex("{name:slug}")
-  assert.Equal(t, regSlug, result)
+  assert.Equal(t, 3, result)
   result = selectRegex("{name:string}")
-  assert.Equal(t, regString, result)
+  assert.Equal(t, 4, result)
 }
 
 
