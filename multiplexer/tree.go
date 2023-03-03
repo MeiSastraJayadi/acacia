@@ -79,7 +79,10 @@ func (tr *tree) insert(label string, handler handlers, method string) {
     if ok {
       currentNode = childNode
     } else {
-      checkIsParams := isWithParams(value)    
+      checkIsParams := false
+      if value != "" {
+        checkIsParams = isWithParams(value)    
+      }
       if !checkIsParams {
         // If path is not a params
         nd := newNode(value)
