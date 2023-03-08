@@ -53,6 +53,18 @@ func TestSubRouter2(t *testing.T) {
   assert.Equal(t, &hdl, hd)
 }
 
+func TestSubRouter3(t *testing.T) {
+  mainRouter := NewRouter("/")
+  subrouter := NewRouter("/").SetPrefix("foo")
+  subrouter.Methods(http.MethodPost).HandleFunc("/", func(w http.ResponseWriter, r *http.Request){})
+  err := mainRouter.SubRouter(subrouter)
+  require.Nil(t, err)
+  hdl := mainRouter.tree.root.child["foo"] 
+  require.NotNil(t, hdl)
+  child := hdl.child
+  assert.Equal(t, 0, len(child))
+}
+
 func TestReturnRegex(t *testing.T) {
   result := selectRegex("{name:slug}")
   assert.Equal(t, 3, result)
