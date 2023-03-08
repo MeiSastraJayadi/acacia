@@ -73,6 +73,12 @@ func (tr *tree) insert(label string, handler handlers, method string) {
     tr.root.handler[method] = &handler
     return
   }
+
+  if len(path) == 1 && path[0] == "/" {
+    tr.root.handler[method] = &handler
+    return
+  }
+
   currentNode := tr.root
   for i, value := range path {
     childNode, ok := currentNode.child[value] 
