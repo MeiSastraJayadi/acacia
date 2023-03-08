@@ -53,12 +53,7 @@ func newNode(path string) *node {
 // the path
 func newTree(basepath string) *tree {
   path := explodePath(basepath)[0]
-  nd := &node{
-    label: path,
-    handler: make(map[string]*handlers),
-    child: make(map[string]*node),
-  } 
-
+  nd := newNode(path) 
   return &tree{
     root: nd,
   }
