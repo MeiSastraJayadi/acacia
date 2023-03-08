@@ -68,7 +68,7 @@ func (rt *Router) HandleFunc(path string, handlerFunc http.HandlerFunc) {
 func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
   url := r.URL.Path
   method := r.Method
-  vr := rt.Vars(r)
+  vr := rt.searchVariabel(r.URL.Path)
   ctx := r.Context()
   ctx = context.WithValue(ctx, "vars", vr)
   req := r.WithContext(ctx)

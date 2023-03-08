@@ -35,8 +35,12 @@ func (rt *Router) searchVariabel(path string) map[string]string {
   return listvars
 }
 
-func (rt *Router) Vars(r *http.Request) map[string]string {
-  return rt.searchVariabel(r.URL.Path)
+func Vars(r *http.Request) map[string]string {
+  variabel := r.Context().Value("vars")
+  if variabel == nil {
+    return make(map[string]string)
+  }
+  return variabel.(map[string]string)
 }
 
 func (rt *Router) Query(r *http.Request, key string) string {
