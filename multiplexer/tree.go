@@ -74,7 +74,7 @@ func (tr *tree) insert(label string, handler handlers, method string) {
     return
   }
 
-  if len(path) == 1 && path[0] == "/" {
+  if len(path) == 1 && path[0] == "" {
     tr.root.handler[method] = &handler
     return
   }
