@@ -1,6 +1,7 @@
 package multiplexer
 
 import (
+	"context"
 	"net/http"
 )
 
@@ -67,11 +68,15 @@ func (rt *Router) HandleFunc(path string, handlerFunc http.HandlerFunc) {
 func (rt *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
   url := r.URL.Path
   method := r.Method
+  vr := rt.Vars(r)
+  ctx := r.Context()
+  ctx = context.WithValue(ctx, "vars", vr)
+  req := r.WithContext(ctx)
   handler, err := rt.tree.search(url,method)
   if err != nil {
     http.Error(w,"404 Not Found", http.StatusNotFound)
     return
   }
-  handler.handler.ServeHTTP(w, r)
+  handler.handler.ServeHTTP(w, req)
 }
 
