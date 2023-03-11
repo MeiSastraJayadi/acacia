@@ -76,14 +76,18 @@ func (tr *tree) insert(label string, handler handlers, method string) {
 
   currentNode := tr.root
   for i, value := range path {
-    childNode, ok := currentNode.child[value] 
+    checkIsParams := false
+    lbl := value 
+    if value != "" {
+      checkIsParams = isWithParams(value)    
+      if checkIsParams {
+        lbl = getKey(value)
+      }
+    }
+    childNode, ok := currentNode.child[lbl] 
     if ok {
       currentNode = childNode
     } else {
-      checkIsParams := false
-      if value != "" {
-        checkIsParams = isWithParams(value)    
-      }
       if !checkIsParams {
         // If path is not a params
         nd := newNode(value)
@@ -92,7 +96,6 @@ func (tr *tree) insert(label string, handler handlers, method string) {
       } else {
         // if path is a params with key and type
         re := selectRegex(value)
-        lbl := getKey(value)
         nd := newNode(lbl)
         nd.re = regMap[re]
         currentNode.rgx[re] = lbl
