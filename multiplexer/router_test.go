@@ -1,6 +1,7 @@
 package multiplexer
 
 import (
+	"log"
 	"net/http"
 	"testing"
 
@@ -70,6 +71,16 @@ func TestReturnRegex(t *testing.T) {
   assert.Equal(t, 3, result)
   result = selectRegex("{name:string}")
   assert.Equal(t, 4, result)
+}
+
+func TestSubRouterRegex(t *testing.T) {
+  rt := NewRouter("/")
+  subrouter := NewRouter("/").SetPrefix("roles")
+  subrouter.Methods(http.MethodGet).HandleFunc("/{name_slug:slug}", func(w http.ResponseWriter, r *http.Request){log.Println("Get")})
+  subrouter.Methods(http.MethodDelete).HandleFunc("/{name_slug:slug}", func(w http.ResponseWriter, r *http.Request){log.Println("Update")})
+  subrouter.Methods(http.MethodPost).HandleFunc("/{name_slug:slug}", func(w http.ResponseWriter, r *http.Request){log.Println("Post")})
+  err := rt.SubRouter(subrouter)
+  require.Nil(t, err)
 }
 
 
