@@ -72,6 +72,14 @@ router.Methods(http.MethodGet).HandleFunc("/{path_slug:slug}", thePathHandlerFun
 ##### -- slug : parameter with slug 
 ##### -- string : default parameter 
 
+## Get Value from Parameters 
+##### To get value from the parameters you can use Vars function. Here is the example
+```golang
+func someHandlerFunc(w http.ResponseWriter, r *http.Request) {
+  vr := multiplexer.Vars(r) 
+  path_slug := vr["path_slug"] // Get path_slug parameter from the URL path
+}
+```
 
 
 
