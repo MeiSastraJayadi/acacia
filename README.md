@@ -57,5 +57,15 @@ subrouter.SetPrefix("product")
 subrouterPost := subrouter.Methods(http.MethodGet)
 router.SubRouter(subrouter)
 ```
+## Path with Parameter
+##### You can specify a parameter in path, and you can use the parameter to get the value from URL path. To do that what you can do is 
+```golang
+router := multiplexer.NewRouter("/").SetPrefix("category")
+
+router.Methods(http.MethodGet).HandleFunc("/{path_slug:slug}", thePathHandlerFunction)
+```
+
+
+
 
 
