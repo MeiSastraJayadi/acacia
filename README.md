@@ -65,6 +65,15 @@ router := multiplexer.NewRouter("/").SetPrefix("category")
 router.Methods(http.MethodGet).HandleFunc("/{path_slug:slug}", thePathHandlerFunction)
 ```
 
+##### In code abobe we create parameter in the path and named it as path_slug, to set parameter you should writer it as {name_of_parameter:type_of_paremeter}
+##### Theres some type you can use in the parameter, you can check it below : 
+##### -- float : parameter with float type 
+##### -- int : parameter with integer type 
+##### -- slug : parameter with slug 
+##### -- string : default parameter 
+
+
+
 
 
 
