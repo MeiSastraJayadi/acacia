@@ -33,7 +33,7 @@ router := multiplexer.NewRouter("/")
 ##### SetPrefix will add a prefix into the router path. the parameter that will be accept in function SetPrefix is just a string 
 ```golang
 router := multiplexer.NewRouter("/")
-router.SetPrefix("product")
+router = router.SetPrefix("product")
 ```
 ## Add Some Methods 
 ##### With Router.Methods(), some methods will be added into the router. The methods can be added more than just one method if the router can handle more than one methods
